@@ -62,28 +62,73 @@
   display: flex;
   margin-bottom: 30px;
 }
-.option{
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-    font-size: 14px;
-    font-weight: 500;
+.option {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
 }
-.checkbox{
-    width: 20px;
+.checkbox {
+  width: 20px;
+  height: 20px;
+}
+.quantity {
+  width: 50px;
+  height: 30px;
+}
+.button {
+  height: 35px;
+  margin-left: 10px;
+  background-color: #d1411e;
+  color: white;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    height: auto;
+    text-align: center;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .imgContainer {
+    width: 70vw;
+    height: 70vw;
+  }
+
+  .title {
+    margin: 5px;
+  }
+
+  .sizes {
+    width: 83%;
+    padding: 0px 20px;
+  }
+
+  .ingredients {
+    flex-direction: column;
+  }
+  .option {
+    margin: 10px;
+    font-size: 18px;
+  }
+
+  .checkbox {
+    width: 25px;
+    height: 25px;
+  }
+
+  .quantity {
     height: 20px;
-}
-.quantity
-{
-    width: 50px;
-    height: 30px;
-}
-.button{
-    height: 35px;
-    margin-left: 10px;
-    background-color: #d1411e;
-    color: white;
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
+    padding: 10px 20px;
+  }
+  .button {
+    height: 44px;
+    padding: 10px 20px;
+  }
 }
