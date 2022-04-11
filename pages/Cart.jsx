@@ -10,19 +10,36 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import axios from "axios";
+import { reset } from "../redux/cartSlice";
+import { useRouter } from "next/router";
+import OrderDetail from "../components/OrderDetail";
+
 //!
 
 const Cart = () => {
   //!paypal
+  const cart = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
+  const [cash, setCash] = useState(false);
+
   // This values are the props in the UI
-  const amount = "2";
+  const amount = cart.total;
   const currency = "USD";
   const style = { layout: "vertical" };
+  const router = useRouter();
+  const dispatch = useDispatch();
   //!
 
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const createOrder = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/orders", data);
+      res.status === 201 && router.push("/Orders/" + res.data._id);
+      dispatch(reset());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //!paypal
   // Custom component to wrap the PayPalButtons and handle currency changes
@@ -68,7 +85,14 @@ const Cart = () => {
           }}
           onApprove={function (data, actions) {
             return actions.order.capture().then(function (details) {
-              console.log(details);
+              // console.log(details);
+              const shipping = details.purchase_units[0].shipping;
+              createOrder({
+                customer: shipping.name.full_name,
+                address: shipping.address.address_line_1,
+                total: cart.total,
+                method: 1,
+              });
               // Your code here after capture the order
             });
           }}
@@ -148,7 +172,12 @@ const Cart = () => {
           {/* paypal button */}
           {open ? (
             <div className={styles.paymentMethod}>
-              <button className={styles.payButton}>CASH ON DELIVERY</button>
+              <button
+                className={styles.payButton}
+                onClick={() => setCash(true)}
+              >
+                CASH ON DELIVERY
+              </button>
               <PayPalScriptProvider
                 options={{
                   "client-id":
@@ -170,6 +199,7 @@ const Cart = () => {
           {/*  */}
         </div>
       </div>
+      {cash && <OrderDetail total={cart.total} createOrder={createOrder} />}
     </div>
   );
 };

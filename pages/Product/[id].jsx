@@ -33,10 +33,10 @@ const Product = ({ pizza }) => {
       setExtras(extras.filter((extra) => extra._id !== option._id));
     }
   };
-  
-  const handleClick =() => {
-    dispatch(addProduct({...pizza, extras, price, quantity}))
-  }
+
+  const handleClick = () => {
+    dispatch(addProduct({ ...pizza, extras, price, quantity }));
+  };
 
   return (
     <div className={styles.container}>
