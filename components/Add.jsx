@@ -128,7 +128,7 @@ const Add = ({ setClose }) => {
             <input
               type="number"
               placeholder="Price"
-              name="price"
+              name="prices"
               onChange={handleExtraInput}
               className={`${styles.input} ${styles.inputsm}`}
             />
